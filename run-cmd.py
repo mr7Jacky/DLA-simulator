@@ -20,7 +20,7 @@ while c.cluster_size < total_size and count < total_step:
     count += 1
 
 plt.title("DLA Cluster", fontsize=20)
-plt.matshow(c.grid)  # plt.cm.Blues) #ocean, Paired
+plt.matshow(c.lattice)  # plt.cm.Blues) #ocean, Paired
 fname = "images/cluster_"+method+"_"+str(c.cluster_size)+".png"
 plt.savefig(fname, dpi=200)
 plt.close()

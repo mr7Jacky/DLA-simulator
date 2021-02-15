@@ -2,60 +2,52 @@ import numpy as np
 from src.Particle import Particle
 
 
-class Cluster:
+class LCluster:
 
-    def __init__(self, side_len, max_radius):
+    def __init__(self, side_len):
         self.side_len = side_len
-        self.lattice = np.zeros((side_len, side_len))
+        self.grid = np.zeros((side_len, side_len))
         self.cluster_size = 0
         self.step_limit = 10000
         self.delta = 2 * np.pi
         self.put_init_seed()
-        self.max_rad = max_radius
-        self.all_particles = []
 
     def put_init_seed(self):
         """
         Put the initial seed at the center of the lattice
         :return: None
         """
-        loc = [self.side_len // 2, self.side_len // 2]
-        p = Particle(loc, 1)
-        p.set_particle(self.lattice)
+        x = y = self.side_len // 2
+        self.grid[x][y] = 1
 
     def get_aggr_size(self):
         """
         Calculate the distance of the most distal seed from the center
         :return: the distance
         """
-        x, y = np.where(self.lattice == 1)
+        x, y = np.where(self.grid == 1)
         mid = self.side_len // 2
-        return self.max_rad * np.mean(np.sqrt(np.power(x - mid, 2) + np.power(y - mid, 2))) + 3
+        return np.mean(np.sqrt(np.power(x - mid, 2) + np.power(y - mid, 2))) + 3
 
-    def launch_walker(self, mode):
+    def launch_walker(self):
         """
         Put a new seed to the lattice
         :return: whether the seed is attached to the grid
         """
-        new_loc = self.generate_random_point(self.get_aggr_size() * 2)
-        p = Particle(new_loc, self.max_rad)
+        new_seed = self.generate_random_point(self.get_aggr_size() * 2)
         is_attached = False
         steps = 0
-        phi = 0
         while True:
-            if mode == "ol":
-                new_loc, phi = self.off_lattice_loc(p.loc[0], p.loc[1], phi)
-            if mode == "mc":
-                new_loc = self.monte_carlo_location(p.loc[0], p.loc[1])
-            p.update_loc(new_loc)
-            if p.is_rambling(self.get_aggr_size() * 3, self.side_len):
+            new_seed = self.walk(new_seed[0], new_seed[1])
+            x, y = tuple(new_seed)
+            if self.is_rambling(x, y, self.get_aggr_size() * 3):
                 break
-            if p.is_near_boundary(self.side_len):
+            if self.is_near_boundary(x, y):
                 break
             if steps > self.step_limit:
                 break
-            if p.is_near_cluster(self.lattice):
-                p.set_particle(self.lattice)
+            if self.is_near_cluster(x, y):
+                self.grid[x, y] = 1
                 self.cluster_size += 1
                 is_attached = True
                 break
@@ -83,7 +75,7 @@ class Cluster:
         """
         loc = self.get_directions(x, y, 4)
         for i, j in loc:
-            if self.lattice[i, j] == 1:
+            if self.grid[i, j] == 1:
                 return True
         return False
 
@@ -107,7 +99,7 @@ class Cluster:
                 return True
         return False
 
-    def monte_carlo_location(self, x, y):
+    def walk(self, x, y):
         act = np.random.uniform(low=0, high=1)
         if act < 0.25:
             return [x + 1, y]
@@ -118,19 +110,10 @@ class Cluster:
         else:
             return [x, y - 1]
 
-    def off_lattice_loc(self, x, y, phi):
-        eta = np.random.uniform(low=0, high=self.delta)
-        new_phi = phi + eta
-        alpha = 2
-        new_x = x + int(alpha * np.cos(new_phi))
-        new_y = y + int(alpha * np.sin(new_phi))
-        return [new_x, new_y], phi
-
     def get_directions(self, x, y, mode):
         if mode == 8:
             v = [x, x - 1, x + 1]
             h = [y, y - 1, y + 1]
             return np.array([[i, j] for i in v for j in h if i < self.side_len and j < self.side_len])
         else:
-            direct = [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]]
-            return [i for i in direct if i[0] < self.side_len and i[1] < self.side_len]
+            return [i for i in [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]] if i[0] < self.side_len and i[1] < self.side_len]
