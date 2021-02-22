@@ -1,4 +1,4 @@
-from src.Cluster import Cluster
+from off_lattice.Cluster import Cluster
 import matplotlib.pyplot as plt
 from matplotlib import colors
 import numpy as np

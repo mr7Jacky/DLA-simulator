@@ -1,5 +1,5 @@
 import numpy as np
-from src.Particle import Particle
+from off_lattice.Particle import Particle
 
 
 class Cluster:
@@ -107,7 +107,8 @@ class Cluster:
                 return True
         return False
 
-    def monte_carlo_location(self, x, y):
+    @staticmethod
+    def monte_carlo_location(x, y):
         act = np.random.uniform(low=0, high=1)
         if act < 0.25:
             return [x + 1, y]
