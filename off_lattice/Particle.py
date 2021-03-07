@@ -1,4 +1,5 @@
 import numpy as np
+import off_lattice.helper as hp
 
 
 class Particle:
@@ -24,13 +25,10 @@ class Particle:
         :return: true or false
         """
         # Check the square circumscribing the particle
-        for i in range(self.loc[0] - self.radius, self.loc[0] + self.radius + 1):
-            for j in range(self.loc[1] - self.radius, self.loc[1] + self.radius + 1):
-                # Check points within the particle
-                if (i - self.loc[0]) ** 2 + (j - self.loc[1]) ** 2 <= self.radius ** 2 + 1:
-                    # If there is a point is 1, then they are connected
-                    if lattice[i][j] == 1:
-                        return True
+        for particle in lattice:
+            if hp.cal_two_points_dist(particle.loc, self.loc) <= \
+                    particle.radius + self.radius:
+                return True
         return False
 
     def is_rambling(self, value, side_len):
@@ -40,19 +38,8 @@ class Particle:
         :param value: threshold
         :return: boolean value
         """
-        mid = side_len // 2
-        return np.sqrt((self.loc[0] - mid) ** 2 + (self.loc[1] - mid) ** 2) > value
-
-    def set_particle(self, lattice):
-        """
-        mark all points within the radius to 1
-        :param lattice: the simulating lattice
-        """
-        # Draw a square of size N*N.
-        for i in range(self.loc[0] - self.radius, self.loc[0] + self.radius + 1):
-            for j in range(self.loc[1] - self.radius, self.loc[1] + self.radius + 1):
-                if (i - self.loc[0]) ** 2 + (j - self.loc[1]) ** 2 <= self.radius ** 2 + 1:
-                    lattice[i][j] = 1
+        mid = side_len / 2
+        return hp.cal_two_points_dist(self.loc, [mid, mid]) > value
 
     def update_loc(self, loc):
         self.loc = loc

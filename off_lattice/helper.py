@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from typing import List
 
-import Particle
+from off_lattice.Particle import Particle
 
 
 def cal_two_points_dist(loc1, loc2):
