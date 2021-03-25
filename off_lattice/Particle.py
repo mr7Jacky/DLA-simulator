@@ -4,9 +4,9 @@ import off_lattice.helper as hp
 
 class Particle:
 
-    def __init__(self, loc, max_radius):
+    def __init__(self, loc, particle_radius):
         self.loc = loc
-        self.radius = round(np.random.uniform(low=1, high=max_radius))
+        self.radius = particle_radius # round(np.random.uniform(low=1, high=max_radius))
 
     def is_near_boundary(self, side_len):
         """

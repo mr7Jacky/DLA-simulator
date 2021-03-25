@@ -1,21 +1,13 @@
-from off_lattice.Cluster import Cluster
+from off_lattice.StaticOffLatticeCluster import StaticOffLatticeCluster
+from on_lattice.StaticOnLatticeCluster import StaticOnLatticeCluster
 import off_lattice.helper as hp
 import matplotlib.pyplot as plt
 import numpy as np
 
-total_size = 100
+c = StaticOffLatticeCluster(particle_radius=1, lattice_size=500, delta=2 * np.pi, max_num_particle=3000)
+c.simulate()
+c.plot_cluster("images/off_lattice_" + str(c.num_particle) + ".png")
 
-c = Cluster(int(np.sqrt(total_size)) * 10, 3)
-count = 0
-prev_size = 0
-while c.cluster_size < total_size:
-    if c.cluster_size > prev_size:
-        prev_size = c.cluster_size
-        print("Step: " + str(count) + "; Current size = " + str(c.cluster_size))
-    c.launch_walker()
-    count += 1
-
-plt.title("DLA Cluster", fontsize=20)
-hp.plot_lattice(c.lattice)
-plt.savefig("images/off_lattice_" + str(c.cluster_size) + ".png", dpi=200)
-plt.close()
+c = StaticOnLatticeCluster(lattice_size=500, max_num_particle=3000)
+c.simulate()
+c.plot_cluster("images/StaticRadiusOnLattice.png")
