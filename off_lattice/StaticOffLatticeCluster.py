@@ -28,8 +28,8 @@ class StaticOffLatticeCluster:
         self.cluster.append(p)
         self.num_particle += 1
 
-    def simulate(self):
-        np.random.seed(42)
+    def simulate(self, seed=42):
+        np.random.seed(seed)
         # loop over particles
         num_part_launch = 0
         while (self.num_particle <= self.max_num_particle) and (2 * self.r_max < self.mid - 2):
@@ -88,18 +88,18 @@ class StaticOffLatticeCluster:
         return np.sqrt(np.power(loc1[0] - loc2[0], 2) + np.power(loc1[1] - loc2[1], 2))
 
     def plot_cluster(self, out_name):
-        plt.figure()
+        fig, ax = plt.subplots()
         plt.title("DLA Cluster", fontsize=20)
         for particle in self.cluster:
             circle = plt.Circle(particle.loc, particle.radius, fc='white', ec="black")
-            plt.gca().add_patch(circle)
+            ax.add_patch(circle)
         plt.axis('scaled')
-        plt.show()
-        plt.savefig(out_name, dpi=200)
-        plt.close()
+        plt.savefig(out_name)
+
+
 
 
 if __name__ == "__main__":
-    c = StaticOffLatticeCluster(particle_radius=1, lattice_size=500, delta=2 * np.pi, max_num_particle=300, alpha=1)
+    c = StaticOffLatticeCluster(particle_radius=1, lattice_size=500, delta=2 * np.pi, max_num_particle=30, alpha=1)
     c.simulate()
     c.plot_cluster("images/off_lattice_" + str(c.num_particle) + ".png")
