@@ -27,7 +27,8 @@ class StaticOnLatticeCluster:
         # initialize lattice  (rule I)
         # loop over particles
         while (self.num_particle <= self.max_num_particle) and (2 * self.r_max < self.mid - 2):
-            print("npart= ", self.num_particle, " total_launch: ", count)
+            if self.num_particle % 10 == 0:
+                print("npart= ", self.num_particle, " total_launch: ", count)
             count += 1
             # start new random walker on circle with radius (RMAX+2)  (rule II)
             x, y = self.generate_random_point()
@@ -56,7 +57,7 @@ class StaticOnLatticeCluster:
                     int(self.mid - self.r_max - 5):int(self.mid + self.r_max + 5)],
                     interpolation='nearest',
                     extent=[-self.r_max - 5, self.r_max + 5, self.r_max + 5, - self.r_max - 5])
-        plt.savefig(out_name + '.png')
+        plt.savefig(out_name)
 
         leni, lenj = self.lattice.shape  # .shape gives you mxn of array
         print(leni, lenj)  # test that read in worked and how to get length and width
@@ -93,4 +94,6 @@ class StaticOnLatticeCluster:
 if __name__ == "__main__":
     c = StaticOnLatticeCluster(lattice_size=500, max_num_particle=3000)
     c.simulate()
-    c.plot_cluster("images/StaticRadiusOnLattice.png")
+    fname = "OnLattice" + str(c.num_particle)
+    c.plot_cluster("images/"+fname + ".png")
+    np.savetxt(fname + '.dat', c.lattice)

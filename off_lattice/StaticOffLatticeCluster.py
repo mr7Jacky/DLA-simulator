@@ -97,9 +97,9 @@ class StaticOffLatticeCluster:
         plt.savefig(out_name)
 
 
-
-
 if __name__ == "__main__":
     c = StaticOffLatticeCluster(particle_radius=1, lattice_size=500, delta=2 * np.pi, max_num_particle=30, alpha=1)
     c.simulate()
-    c.plot_cluster("images/off_lattice_" + str(c.num_particle) + ".png")
+    fname = "images/off_lattice_" + str(c.num_particle)
+    c.plot_cluster(fname + ".png")
+    np.savetxt(fname + '.dat')
