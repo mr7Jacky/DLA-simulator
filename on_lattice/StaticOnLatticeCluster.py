@@ -27,7 +27,8 @@ class StaticOnLatticeCluster:
         # initialize lattice  (rule I)
         # loop over particles
         while (self.num_particle <= self.max_num_particle) and (2 * self.r_max < self.mid - 2):
-            print("npart= ", self.num_particle, " total_launch: ", count)
+            if self.num_particle % 100 == 0:
+                print("npart= ", self.num_particle, " total_launch: ", count)
             count += 1
             # start new random walker on circle with radius (RMAX+2)  (rule II)
             x, y = self.generate_random_point()
@@ -91,6 +92,6 @@ class StaticOnLatticeCluster:
 
 
 if __name__ == "__main__":
-    c = StaticOnLatticeCluster(lattice_size=500, max_num_particle=3000)
-    c.simulate()
-    c.plot_cluster("images/StaticRadiusOnLattice.png")
+	c = StaticOnLatticeCluster(lattice_size=1500, max_num_particle=30000)
+	c.simulate()
+	np.savetxt(str(c.num_particle)+".dat", c.lattice)

@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from off_lattice.Particle import Particle
-
+from Particle import Particle
+import pickle
 
 class StaticOffLatticeCluster:
 
@@ -89,17 +89,20 @@ class StaticOffLatticeCluster:
 
     def plot_cluster(self, out_name):
         fig, ax = plt.subplots()
-        plt.title("DLA Cluster", fontsize=20)
+        # plt.title("DLA Cluster", fontsize=20)
         for particle in self.cluster:
-            circle = plt.Circle(particle.loc, particle.radius, fc='white', ec="black")
+            circle = plt.Circle(particle.loc, particle.radius, fc='black', ec="black")
             ax.add_patch(circle)
-        plt.axis('scaled')
+        plt.axis('off')
         plt.savefig(out_name)
 
 
 
 
 if __name__ == "__main__":
-    c = StaticOffLatticeCluster(particle_radius=1, lattice_size=500, delta=2 * np.pi, max_num_particle=30, alpha=1)
+    c = StaticOffLatticeCluster(particle_radius=1, lattice_size=500, delta=2 * np.pi, max_num_particle=3000, alpha=1)
     c.simulate()
+    outfile = open('off_lat'+str(c.num_particle),'wb')
+    pickle.dump(c.cluster,outfile)
+    outfile.close()
     c.plot_cluster("images/off_lattice_" + str(c.num_particle) + ".png")
