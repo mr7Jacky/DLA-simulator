@@ -97,12 +97,16 @@ class StaticOffLatticeCluster:
         plt.savefig(out_name)
 
 
-
-
 if __name__ == "__main__":
     c = StaticOffLatticeCluster(particle_radius=1, lattice_size=500, delta=2 * np.pi, max_num_particle=3000, alpha=1)
     c.simulate()
+<<<<<<< HEAD
     outfile = open('off_lat'+str(c.num_particle),'wb')
     pickle.dump(c.cluster,outfile)
     outfile.close()
     c.plot_cluster("images/off_lattice_" + str(c.num_particle) + ".png")
+=======
+    fname = "images/off_lattice_" + str(c.num_particle)
+    c.plot_cluster(fname + ".png")
+    np.savetxt(fname + '.dat')
+>>>>>>> e961dc942919b33131b859d43bf0fadb5dc8f508
