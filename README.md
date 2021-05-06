@@ -22,20 +22,20 @@ We provide both on-lattice and off-lattice simulator written in python. We also 
    
 #### Demo
 The following flowchart shows a simple version of basic idea behind the DLA simulation:
-[!basic](img/BasicStep.jpg)
+![basic](img/BasicStep.jpg)
 
 After the simulation, we would obtain some cluster like the following graph:
 
 ##### On-lattice
-[!off](img/off_lattice.png)
+![off](img/off_lattice.png)
 
 ##### Off-lattice
-[!on](img/on_lat.png)
+![on](img/on_lat.png)
 
 The fractal dimension is measure by counting the number of particle within certain range. The following graph shows the on-lattice measurement using a box.
-[!bs](img/bs.jpg)
+![!bs](img/bs.jpg)
 
 As a result of fractal dimension measurement, we would obtain a plot of number of particle with respect to the size of box, like
-[!plot](img/dfplot.png)
+![!plot](img/dfplot.png)
 
     
