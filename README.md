@@ -40,4 +40,9 @@ As a result of fractal dimension measurement, we would obtain a plot of number o
 
 ![!plot](img/dfplot.png)
 
+#### Reference
+1. L. M. Sander, “Fractal growth processes,” inMathematics of Complexity and Dynamical Sys-tems, edited by R. A. Meyers (Springer New York, New York, NY, 2011) pp. 429–445.
+2. T. A. Witten and L. M. Sander, Phys. Rev. B27, 5686 (1983).
+3. I. R. Nogueira, S. G. Alves,  and S. C. Ferreira, Physica A: Statistical Mechanics and itsApplications390, 4087 (2011).
+4. “Fractal dimension,”https://en.wikipedia.org/wiki/Fractal_dimension(2021).
     
