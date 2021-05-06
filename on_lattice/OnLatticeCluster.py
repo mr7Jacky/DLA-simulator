@@ -16,26 +16,18 @@ class StaticOnLatticeCluster:
         self.lattice[self.mid, self.mid] = 1
         self.num_particle = 1
         self.r_max = 3
-        self.step_limit = 10000
         self.max_num_particle = max_num_particle
         self.stickiness = 0
         self.range = 9 # Only odd number check n*n matrix n > 1
-        np.random.seed(2020)
+        np.random.seed(20000)
 
     def simulate(self):
         count = 0
         plt.gca().invert_yaxis()
-        # initialize
-        np.random.seed(11)
         # initialize lattice  (rule I)
         # loop over particles
-<<<<<<< HEAD:on_lattice/OnLatticeCluster.py
         while (self.num_particle < self.max_num_particle) and (2 * self.r_max < self.mid - 2):
             if self.num_particle % 100 == 0:
-=======
-        while (self.num_particle <= self.max_num_particle) and (2 * self.r_max < self.mid - 2):
-            if self.num_particle % 10 == 0:
->>>>>>> e961dc942919b33131b859d43bf0fadb5dc8f508:on_lattice/StaticOnLatticeCluster.py
                 print("npart= ", self.num_particle, " total_launch: ", count)
             count += 1
             # start new random walker on circle with radius (RMAX+2)  (rule II)
@@ -51,9 +43,9 @@ class StaticOnLatticeCluster:
                     walk_stop = 1
                 # stop random walk if next to cluster site, i.e. up,down,right,left from
                 #    already grown cluster, update npart,lattice and RMAX   (rule V)
-#                 if (self.lattice[x, y + 1] + self.lattice[x, y - 1] +
-#                     self.lattice[x + 1, y] + self.lattice[x - 1, y]) != 0: 
-                if np.sum(self.lattice[x-self.range//2:x+self.range//2+1,y-self.range//2:y+self.range//2+1]) != 0:
+                if (self.lattice[x, y + 1] + self.lattice[x, y - 1] +
+                    self.lattice[x + 1, y] + self.lattice[x - 1, y]) != 0: 
+                #if np.sum(self.lattice[x-self.range//2:x+self.range//2+1,y-self.range//2:y+self.range//2+1]) != 0:
                     act = np.random.random_sample()
                     if act > self.stickiness:
                         walk_stop = 1
@@ -103,12 +95,6 @@ class StaticOnLatticeCluster:
 
 
 if __name__ == "__main__":
-    c = StaticOnLatticeCluster(lattice_size=1500, max_num_particle=3000)
+    c = StaticOnLatticeCluster(lattice_size=1500, max_num_particle=100)
     c.simulate()
-<<<<<<< HEAD:on_lattice/OnLatticeCluster.py
     np.savetxt(str(c.num_particle)+".dat", c.lattice)
-=======
-    fname = "OnLattice" + str(c.num_particle)
-    c.plot_cluster("images/"+fname + ".png")
-    np.savetxt(fname + '.dat', c.lattice)
->>>>>>> e961dc942919b33131b859d43bf0fadb5dc8f508:on_lattice/StaticOnLatticeCluster.py
