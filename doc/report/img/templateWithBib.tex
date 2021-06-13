@@ -1,0 +1,180 @@
+%This is a template for PHYS 310 papers based on the American 
+%Physical Society template.aps file for REVTeX 4.1.  
+%All lines (like this one) that %begin with a "%" are comments.
+
+%This version constructs the bibliography from information 
+%contained in a separate file, myRefs.bib.  For most modern references,
+%the information in myRefs.big is easy to cut and paste from journal
+%websites. 
+%
+%To compile this paper:
+%
+%  (0) You need templateWithBib.tex and myRefs.bib and the figure files
+%  (1) pdflatex templateWithBib
+%  (2) bibtex templateWithBib (Don't worry about the warning.)
+%  (3) pdflatex templateWithBib
+%  (4) pdflatex templateWithBib
+%
+%You should now have a file templateWithBib.pdf 
+%To view and print this paper use any pdf viewer.
+%   for example (5) atril templateWithBib.pdf
+
+\documentclass[aps,preprint,groupedaddress,letterpaper]{revtex4-1}
+%\documentclass[aps,twocolumn,groupedaddress]{revtex4-1}
+\usepackage{graphicx,bm,hyperref,amsmath,amssymb}
+\usepackage{natbib} % necessary for bibtex
+
+\begin{document}
+
+\title{This is the title}
+
+\author{A. Student}
+\affiliation{Department of Physics \& Astronomy, Bucknell University, 
+Lewisburg, PA 17837}
+
+\begin{abstract}
+This is a template for PHYS 310 papers based on the APS REVTeX 4 format.  
+It should be copied to the user's directory and modified as necessary.  
+You can use any text editor (gedit, nano, emacs, vi, \dots) 
+to modify the text.  The text file from which this was produced should be 
+read side-by-side with the formatted output.
+\end{abstract}
+
+%%%% Make sure that \maketitle command is after the abstract
+\maketitle
+
+\section{Introduction}
+This is the beginning of the actual paper.  All text is entered 
+without regard to specific formatting, 
+and you  
+don't need to worry      about white space    between 
+words.  The only thing you do have to worry about is a line 
+with no text on it at all.   This is the signal for a new 
+paragraph.
+
+
+This line follows a blank line and should be a new paragraph.  All 
+mathematical expressions should be in a different font than the
+normal text.  For example, you might want to discuss the equation 
+$y=mx +b$.  In the \verb+.tex+ file
+you surround all in-line math like this with dollar signs to get 
+the math font.    
+If you want to display an equation on its own numbered line you enter
+the \textit{equation environment}.  For example, the equation describing
+a parabola is 
+\begin{equation}
+y = a(x-x_0)^2 + h.
+\label{parabola}
+\end{equation}
+An important equation in physics is
+\begin{equation}
+\vec{F}_{\rm net}=\frac{{\rm d}\vec{p}}{{\rm d}t},
+\label{newton}
+\end{equation}
+which relates force to the time derivative of momentum.  If you 
+look in the \verb+templateWithBib.tex+ file you will see \verb+\label{}+commands
+inside each equation environment.  These allow you to refer 
+to equations by label rather than number.  Newton's 
+second law is Eq.~(\ref{newton}).  
+
+\section{Experiment}
+This is the beginning of another section.  In most papers you will
+need to reference other work.  You cite other works using labels, much
+the way you refer to equations.  For example, in writing about Newton's 
+gravitational constant  
+$G$, you might have a sentence like the following: Recent experiments
+using sophisticated torsion pendulums and tons of money have measured
+values of $G$ with a precision of 0.001\% \cite{Teufel2016}.   Notice how 
+the reference is cited, and also note that percent sign was 
+preceded by a \verb+\+, which means ``print the \% sign --- don't 
+treat the rest of the sentence as a comment.  We can add additional 
+citations to a book \cite{SLI90} and another paper \cite{QandJ12}.
+
+\subsection{Figures}
+(Note that this is a sub-section.)
+
+\begin{figure}
+\includegraphics[width=2.5in]{samplefig.eps}
+\caption{Overhead view the torsion pendulum used to measure Newton's 
+gravitational constant. 
+\label{overhead}}
+\end{figure}
+
+Figures should be made as separate in separate files in a 
+vector graphics  format like PDF or EPS.
+Figures are labeled and referenced in much the same way as 
+equations.  Figures should be referred to in the text, and the caption 
+should be self contained.  An overhead view of the torsion pendulum 
+is illustrated in Fig.~\ref{overhead}.  In the \verb+.tex+ file, you should 
+use the \textit{figure environment}, and place it close the first mention 
+of the figure in the text.  The exact placement of the figure will be 
+determined by RevTeX, not by you, although you can control it to some
+degree. In books and journal articles figures generally are placed at the 
+top or bottom of the page.  Figure~\ref{cubic_graph} was forced to be 
+at the bottom with the \verb+[b]+ option after the \verb+\begin{figure}+ 
+command.
+
+\begin{figure}[b]
+\includegraphics[width=2.0in]{cubic.pdf}
+\caption{Illustration of the function $f(t)=t(t-3)(t+2)$.
+\label{cubic_graph}}
+\end{figure}
+Figures that are not the ``right'' size can be 
+scaled using the  \verb+[width=..]+ option of the 
+\verb+\includegraphics+ command, 
+as is done for the illustrated graph of the function $f(t)=t (t-3)(t+2)$ in
+in Fig.~\ref{cubic_graph}.  
+(I have scaled this graph too much to make a point; don't make 
+graphs this small! You should try to ``fix" this.)
+Figures can also be scaled to a fraction of a a column width.
+
+\subsection{Tables}
+
+\begin{table}
+\caption{This is a sample data table.}
+\begin{tabular}{ccc}\hline\hline
+Run \# &\hspace{0.2in}$a$\hspace{0.2in} & \hspace{0.2in}$b$\hspace{0.2in}\mbox{}\\
+\hline
+1      & 5.0 &  10.1 \\ 
+2      & 6.2 &  9.8  \\ 
+3      & 5.5 &  10.4 \\ 
+\hline\hline 
+\end{tabular}
+\end{table}
+
+This paper contains a simple example of a data table. The \verb+{ccc}+ after
+the \verb+\begin{tabular}+ says: create a table with three columns, 
+and center the entries;  there are lots of other  options for tables. 
+The column entries are delimited by the \verb+&+ symbols, the 
+\verb+\\+'s indicate line breaks as usual, and the \verb+\hline+'s
+indicate horizontal lines.  (It is also possible to add more vertical
+and horizontal space as necessary.) 
+
+\subsection{Other stuff}
+There are many other features of TeX/LaTeX that aren't covered
+in this short template.   For additional information, see:
+\begin{itemize}
+\item \verb+http://tug.org/tutorials/tugindia/+
+%\item \verb+/info/lshort/english/lshort.pdf+
+\item \verb+http://www.maths.tcd.ie/~dwilkins/LaTeXPrimer/+
+\item \verb+http://www.eg.bucknell.edu/physics/ph310/+
+\end{itemize}
+This bulleted list is created with the \textit{itemize environment}.
+ 
+\begin{acknowledgments}
+The author thanks Dr.~Wise for fruitful discussions.  This work 
+was supported by the NSF REU Program under Award No.\ PHY-0552790. 
+\end{acknowledgments}
+
+\bibliography{myRefs}  % Produces the bibliography via BibTeX
+
+% The following part from template.tex got replaced with line above
+
+%Here is the list of cited works.
+%\begin{thebibliography}{}
+%\bibitem{JONES} R. Jones, H. Smith, and G. Johnson, ``Measuring big 
+%$G$ better than they do at Bucknell,'' Phys.\ Rev.\ A, {\bf 62},
+%1222 (2001)
+%\end{thebibliography}
+
+\end{document} 
